@@ -1,10 +1,10 @@
 import conf  from "../conf/conf";
 
-import { CLient, Account, ID } from "appwrite";
+import { Client, Account, ID } from "appwrite";
 
 
 export class AuthService {
-    client = new CLient();
+    client = new Client();
     account;
 
     constructor(){
@@ -19,7 +19,7 @@ export class AuthService {
             const userAccount=await this.account.create(ID.unique(),email,password,name);
             if(userAccount){
                 //call another method
-                return this.Login({email,password});
+                return await this.login(email, password);
             }
             else{
                 return userAccount;
@@ -29,9 +29,9 @@ export class AuthService {
         }
     }
 
-    async Login(email,password){
+    async login(email,password){
         try{
-            return await this.createEmailSession(email,password);
+            return await this.account.createEmailSession(email,password);
         } catch(error){
             throw(error);
         }
@@ -41,7 +41,8 @@ export class AuthService {
         try{
             return await this.account.get();
         }catch(error){
-            throw error;
+            console.log("No active session", error);
+            return null;
         }
         return null;
     }
