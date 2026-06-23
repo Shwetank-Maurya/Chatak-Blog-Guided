@@ -13,7 +13,7 @@ export default function RTE(name,control,label,defaultValue=""){
                 <Editor
                 initialValue={defaultValue}
                 init={{
-                    initialValue=dafaultValue,
+                    initialValue:defaultValue,
                     height:500,
                     menubar:false,
                     plugins:[
